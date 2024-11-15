@@ -27,8 +27,18 @@ export default function MainPage() {
         navigate('/login');
     };
 
+    const handlingLoad = async () => {
+        try {
+            await loadComments();
+        } catch (e) {
+            if (e.message === 'Invalid tokens') {
+                navigate('/login')
+            }
+        }
+    }
+
     useEffect(() => {
-        loadComments();
+        handlingLoad();
     }, []);
 
     return <>

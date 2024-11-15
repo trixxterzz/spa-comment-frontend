@@ -1,5 +1,6 @@
 import axios from 'axios';
 import addAlert from '../utils/addAlert';
+import { clearCookies } from '../utils/cookies';
 
 export class HttpError extends Error {
     constructor(message, code = 400) {
@@ -22,6 +23,10 @@ const handleResponseError = (error) => {
     console.error(error);
   
     message !== 'Invalid tokens' && addAlert(message);
+
+    if (message === 'Invalid tokens') {
+      clearCookies();
+    }
   
     throw new HttpError(message || 'Something went wrong', status);
 };
